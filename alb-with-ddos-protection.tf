@@ -47,9 +47,15 @@ resource "yandex_iam_service_account" "ig-sa" {
   name = local.sa_name
 }
 
-resource "yandex_resourcemanager_folder_iam_member" "editor" {
-  folder_id = var.folder_id
-  role      = "editor"
+resource "yandex_resourcemanager_folder_iam_member" "compute_editor" {
+  folder_id = "<идентификатор_каталога>"
+  role      = "compute.editor"
+  member    = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
+}
+
+resource "yandex_resourcemanager_folder_iam_member" "load-balancer-editor" {
+  folder_id = "<идентификатор_каталога>"
+  role      = "alb.editor"
   member    = "serviceAccount:${yandex_iam_service_account.ig-sa.id}"
 }
 
